@@ -13,6 +13,7 @@ import org.apache.rocketmq.order.common.config.MQNamesrvConfig;
 import org.apache.rocketmq.order.common.util.LogExceptionWapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ import javax.annotation.Resource;
  * @desc 秒杀下单消费者
  */
 @Component
-public class SecKillChargeOrderConsumer {
+public class SecKillChargeOrderConsumer implements DisposableBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecKillChargeOrderConsumer.class);
 
@@ -75,5 +76,10 @@ public class SecKillChargeOrderConsumer {
             throw new RuntimeException("[秒杀下单消费者]--SecKillChargeOrderConsumer加载异常!", e);
         }
         LOGGER.info("[秒杀下单消费者]--SecKillChargeOrderConsumer加载完成!");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("SecKillChargeOrderConsumer已经被销毁");
     }
 }
